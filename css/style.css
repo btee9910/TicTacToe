@@ -3,37 +3,52 @@
 }
 
 body {
-
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
 }
 
 .container {
-    width: 800px;
-    margin: 0 auto;
+    max-width: 800px;
+    margin-inline: auto;
     text-align: center;
+    display: grid;
+    grid-template: 100px 250px 250px 100px / repeat( 3, 1fr );
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#nav {
+    grid-column: 1 / -1;
+    color: blueviolet;
 }
 
 #title {
-    font-size: 40px;
-    color: blueviolet;
-    margin: 20px auto;
+    font-size: 50px;
+    line-height: 50px;
 }
 
-.row {
-    width: 300px;
-    height: 100px;
-    margin: 0 auto;
-
+#board {
+    grid-row: auto / span 2;
+    grid-column: auto / span 2; 
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    gap: 10px;
+    padding: 50px;
+    box-sizing: border-box;
 }
 
-.box {
-    width: 75px;
-    height: 75px;
-    display: inline-block;
-    border: 1px solid yellow;
+.board-box {
+    width: auto;
+    block-size: 100%;
 }
 
-input {
-    width: 70px;
-    height: 70px;
+.player-box > * {
+    vertical-align: middle;
+}
 
+#message-box {
+    grid-column: 1 / -1;
 }
