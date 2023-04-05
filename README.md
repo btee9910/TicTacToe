@@ -16,14 +16,14 @@
     * filter code to make it dry - soon
 
 ---
-## Visit the game page [Tic Tac Toe](https://btee9910.github.io/project0/).
+## Visit the game page [Tic Tac Toe](https://external.ink?to=/btee9910.github.io/project0/).
 
 <br></br>
 
 ### See below for drafted layout
 ---
 
-[![Layout](images/updated-layout.png)](https://external.ink?to=/wireframe.cc/Qr11sf)
+![Layout](images/updated-layout.png)
 
 
 
