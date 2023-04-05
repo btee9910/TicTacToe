@@ -1,6 +1,6 @@
-* {
+/* * {
     border: 1px solid red;
-}
+} */
 
 body {
     margin: 0;
@@ -22,7 +22,7 @@ body {
 
 #nav {
     grid-column: 1 / -1;
-    color: blueviolet;
+    color: rgb(226, 58, 43);
 }
 
 #title {
@@ -35,20 +35,53 @@ body {
     grid-column: auto / span 2; 
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    gap: 10px;
+    gap: 20px;
     padding: 50px;
     box-sizing: border-box;
+    border: 1px solid blue;
 }
 
-.board-box {
+.board-box .blur-box{
     width: auto;
     block-size: 100%;
+    cursor: pointer;
+    border: 1px solid rgb(23, 155, 243);
+}
+
+.player-box {
+    border: 1px solid blue;
 }
 
 .player-box > * {
     vertical-align: middle;
 }
 
+.token-img {
+    width: 100px;
+    vertical-align: middle;
+    padding-top: 20px;
+}
+
 #message-box {
     grid-column: 1 / -1;
+    padding-top: 30px;
+    font-size: 20px;
+}
+
+.cross {
+    background: url(../images/cross.png);
+    background-size: 100%;
+    background-position: center;
+}
+
+.circle {
+    background: url(../images/circle.png);
+    background-size: 110%;
+    background-position: center;
+}
+
+.blur {
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 100%;
+    height: 100%;
 }
