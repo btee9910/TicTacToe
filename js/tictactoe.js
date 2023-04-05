@@ -3,8 +3,9 @@ const data = {
     player2Name: 'Tim',
     player1: [],                                                    // empty array to assign each chosen box
     player2: [],                                                    // empty array to assign each chosen box
-    board: [ null, false, false, false, false, 
-            false, false, false, false, false ],                    // [0] is null; [1]-[9] box positions
+    player: [ this.player1, this.player2 ],
+    board: [ false, false, false, false, false,
+             false, false, false, false, false ],                    // [0] is null; [1]-[9] box positions
     threeInARow: [ [1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7],
                     [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7] ],   // rows for winning
     turns: 0                                                        // even no.: player 1 turn; odd no.: player 2
@@ -60,24 +61,22 @@ $('#button1, #button2, #button3, #button4, #button5, #button6, #button7, #button
         return;
     } else if ( data.turns % 2 === 0 ) {
         $(this).addClass('circle');
-        $(this).children('.blur-box').addClass('blur');
     } else {
         currentPlayer = 'player2'; 
         $(this).addClass('cross');
-        $(this).children('.blur-box').addClass('blur');
     };
+    $(this).children('.blur-layer').addClass('blur').fadeIn("slow");
 }).mouseleave( function() {
     const boxNum = Number( $(this).attr('id').slice( -1 ) );
-    let currentPlayer = 'player1'; 
+    let currentPlayer = 'player1';
+    $(this).children('.blur-layer').removeClass('blur');
     if ( data.board[ boxNum ] ) {
         return;
     } else if ( data.turns % 2 === 0 ) {
         $(this).removeClass('circle');
-        $(this).children('.blur-box').removeClass('blur');
     } else {
         currentPlayer = 'player2';
         $(this).removeClass('cross');
-        $(this).children('.blur-box').removeClass('blur');
     };
 });
 });

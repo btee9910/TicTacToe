@@ -14,15 +14,15 @@ body {
     margin-inline: auto;
     text-align: center;
     display: grid;
-    grid-template: 100px 250px 250px 100px / repeat( 3, 1fr );
-    gap: 10px;
+    grid-template: 100px 1fr 1fr 100px / repeat( 3, 1fr );
+    gap: 20px;
     padding: 10px;
     box-sizing: border-box;
 }
 
 #nav {
     grid-column: 1 / -1;
-    color: rgb(226, 58, 43);
+    color: rgb(93, 21, 14);
 }
 
 #title {
@@ -30,30 +30,49 @@ body {
     line-height: 50px;
 }
 
-#board {
+#board-square-frame {
+    position: relative;
+    width: 100%;
     grid-row: auto / span 2;
     grid-column: auto / span 2; 
+}
+
+#board-square-frame:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+#board {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
     gap: 20px;
-    padding: 50px;
+    background: #D7D7D7;
+    padding: 0px;
     box-sizing: border-box;
-    border: 1px solid blue;
+    border: 70px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px grey;
 }
 
-.board-box .blur-box{
-    width: auto;
-    block-size: 100%;
+.box-background {
+    background-color: white;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.box-background, .content-box, .blur-layer{
+    width: 100%;
+    height: 100%;
     cursor: pointer;
-    border: 1px solid rgb(23, 155, 243);
 }
 
 .player-box {
-    border: 1px solid blue;
-}
-
-.player-box > * {
-    vertical-align: middle;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px grey;
 }
 
 .token-img {
@@ -81,7 +100,7 @@ body {
 }
 
 .blur {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.5);
     width: 100%;
     height: 100%;
 }
