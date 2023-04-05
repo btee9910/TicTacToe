@@ -16,7 +16,7 @@
     * filter code to make it dry - soon
 
 ---
-## Visit the game page [Tic Tac Toe](https://external.ink?to=/btee9910.github.io/project0/).
+## Visit the game page [Tic Tac Toe](https://btee9910.github.io/project0/).
 
 <br></br>
 
