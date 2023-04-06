@@ -3,46 +3,57 @@ const data = {
         id: '#player1', 
         name: 'Player 1',
         token: 'circle',
-        box: [] 
-    },                                                    // empty array to assign each chosen box
+        box: []     // empty array to assign each chosen box
+    },
     player2: { 
         id: '#player2', 
         name: 'Player 2',
         token: 'cross',
-        box: [] 
-    },                                                    // empty array to assign each chosen box
+        box: []
+    },
+    // [0] is null; [1]-[9] box positions
     board: [ true, false, false, false, false,
-             false, false, false, false, false ],                    // [0] is null; [1]-[9] box positions
+             false, false, false, false, false ],
+    // rows for winning
     threeInARow: [ [1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7],
-                    [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7] ],   // rows for winning
-    player: function( next = 0 ) { 
-        if ( ( this.round + next ) % 2 === 0 ) {                               // return current players turn
+                    [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7] ],
+    winningRow: 1,
+    // return current players turn
+    player: function( next = 0 ) {
+        if ( ( this.round + next ) % 2 === 0 ) {
             return this.player1;
         } else return this.player2; 
     },
-    round: 0,                                                        // keep track of game round
+    // keep track of game round
+    round: 0,
+    // When game end
     theEnd: false 
 };
 
 const alreadyWon = () => {
     let won = false;
-    for ( let i = 0; i < data.threeInARow.length; i++ ) {                           // iterate each winning row
-        for ( let j = 0; j < 3; j++ ) {                                               // iterate each box in the row
+    // iterate each winning row
+    for ( let i = 0; i < data.threeInARow.length; i++ ) {
+        for ( let j = 0; j < 3; j++ ) {     // iterate each box in the row
             // check box match player's box
             if ( $.inArray( data.threeInARow[ i ][ j ], data.player().box ) === -1 ) {
                 won = false;                                                            
-                break;                                                                // exit iteration if not match
+                break;      // exit iteration if not match
             } else won = true;
-        }; if ( won ) return data.theEnd = true;                                      // if a row is matching 
-    }; return won;                                                                  // otherwise it return false
+        }; if ( won ) {
+            data.winningRow += i;                       // identify winning row
+            return data.theEnd = true;                  // if a row is matching 
+        };
+    }; return won;                                      // otherwise it return false
 };
+
 
 $('document').ready( function() {
 
+    // Take players name
     $('#p1, #p2').on('keyup', function () {
         const currentPlayer = 'player' + $(this).attr('id').slice( -1 ) ;  
-        // get what the user has typed so far
-        data[ currentPlayer ].name = $(this).val();
+        data[ currentPlayer ].name = $(this).val();      // Store player name to data
     });
 
     // Game input
@@ -58,26 +69,25 @@ $('document').ready( function() {
         data.board[ boxNum ] = true;                                        // record chosen box on board in data
 
         if ( alreadyWon() ) {                                               // check if someone win
-            $('#message-box').text(`Winner is ${ data.player().name }!`);   // Winner notice
-            $('#message-box').stop(true,false).animate( { fontSize: '3em' } ).animate( { fontSize: '2em' } ).animate( { fontSize: '3em' }, 1000 )
-            $( data.player().id ).addClass('winner');
-            $( data.player().id ).find('.trophy').fadeIn().animate({
-                                                            right: '95%', height: '+=80%', width: '+=80%'
-                                                            }).delay(4000).animate({
-                                                                left: '65%', height: '-=80%', width: '-=80%'
-                                                            });
+            $(`.line`).addClass(`line${ data.winningRow }`).slideDown();
+            $('#message-box').text(`Winner is ${ data.player().name }!`).stop(true,false).animate( { fontSize: '3em' } ).animate( { fontSize: '2em' } ).animate( { fontSize: '3em' }, 1000 );   // message animation
+            $( data.player().id ).addClass('winner').find('.trophy').fadeIn().animate({     // show winner border and animation for trophy
+                right: '95%', height: '+=80%', width: '+=80%'
+                }).delay(4000).animate({
+                    left: '65%', height: '-=80%', width: '-=80%'
+                });
             return;
-        } else if ( data.round === 8 ) {
-            $('#message-box').text(`Draw!`);
+        } else if ( data.round === 8 ) {                                    // check for draw game
+            $('#message-box').text(`Draw!`).stop(true,false).animate( { fontSize: '3em' } ).animate( { fontSize: '2em' } ).animate( { fontSize: '3em' }, 1000 );                // animation
         } else {
-            $('#message-box').text(`${ data.player( 1 ).name }'s turn.`);   // Next Player notice
-            $( data.player( 1 ).id ).addClass('player-turn');               // add 'whose turn' border to next player
-            data.round ++;                                                  // update round
+            $('#message-box').text(`${ data.player( 1 ).name }'s turn.`);               // Next Player notice
+            $( data.player( 1 ).id ).addClass('player-turn');                           // add 'whose turn' border to next player
+            data.round ++;                                                              // update round
+            $('#message-box').stop(true,false).fadeIn(1000).delay(4000).fadeOut(2000);  // message box animation
         };
-        $('#message-box').stop(true,false).fadeIn(1000).delay(4000).fadeOut(2000);
     });
 
-    // pre-select draft feature
+    // pre-select drafting feature
     $('#box1, #box2, #box3, #box4, #box5, #box6, #box7, #box8, #box9').mouseenter( function() { 
         const boxNum = Number( $(this).attr('id').slice( -1 ) );                // get clicked box number
 
@@ -97,6 +107,5 @@ $('document').ready( function() {
             $(this).find('.draft-layer').removeClass('draft');                  // remove lighter layer
         };
     });
-    $('#message-box').delay(1000).fadeIn(1000).delay(4000).fadeOut(2000);
-
+    
 });
