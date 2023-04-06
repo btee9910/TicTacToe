@@ -1,3 +1,4 @@
+// Database
 const data = {
     player1: {
         id: '#player1', 
@@ -11,40 +12,40 @@ const data = {
         token: 'cross',
         box: []
     },
-    // [0] is null; [1]-[9] box positions
+// [0] is null; [1]-[9] box positions
     board: [ true, false, false, false, false,
              false, false, false, false, false ],
-    // rows for winning
+// rows for winning
     threeInARow: [ [1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7],
                     [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7] ],
     winningRow: 1,
-    // return current players turn
+// return current players turn
     player: function( next = 0 ) {
         if ( ( this.round + next ) % 2 === 0 ) {
             return this.player1;
         } else return this.player2; 
     },
-    // keep track of game round
+// keep track of game round
     round: 0,
-    // When game end
-    theEnd: false 
-};
-
-const alreadyWon = () => {
-    let won = false;
-    // iterate each winning row
-    for ( let i = 0; i < data.threeInARow.length; i++ ) {
-        for ( let j = 0; j < 3; j++ ) {     // iterate each box in the row
-            // check box match player's box
-            if ( $.inArray( data.threeInARow[ i ][ j ], data.player().box ) === -1 ) {
-                won = false;                                                            
-                break;      // exit iteration if not match
-            } else won = true;
-        }; if ( won ) {
-            data.winningRow += i;                       // identify winning row
-            return data.theEnd = true;                  // if a row is matching 
-        };
-    }; return won;                                      // otherwise it return false
+// When game end
+    theEnd: false,
+// check if someone win
+    alreadyWon: function( ) {
+        let won = false;
+        // iterate each winning row
+        for ( let i = 0; i < data.threeInARow.length; i++ ) {
+            for ( let j = 0; j < 3; j++ ) {     // iterate each box in the row
+                // check box match player's box
+                if ( $.inArray( data.threeInARow[ i ][ j ], data.player().box ) === -1 ) {
+                    won = false;                                                            
+                    break;      // exit iteration if not match
+                } else won = true;
+            }; if ( won ) {
+                data.winningRow += i;                       // identify winning row
+                return data.theEnd = true;                  // if a row is matching 
+            };
+        }; return won;                                      // otherwise it return false
+    }
 };
 
 
@@ -68,10 +69,11 @@ $('document').ready( function() {
         data.player().box.push( boxNum );                                   // record player's box in data
         data.board[ boxNum ] = true;                                        // record chosen box on board in data
 
-        if ( alreadyWon() ) {                                               // check if someone win
+        if ( data.alreadyWon() ) {                                          // check if someone win
             $(`.line`).addClass(`line${ data.winningRow }`).slideDown();
             $('#message-box').text(`Winner is ${ data.player().name }!`).stop(true,false).animate( { fontSize: '3em' } ).animate( { fontSize: '2em' } ).animate( { fontSize: '3em' }, 1000 );   // message animation
-            $( data.player().id ).addClass('winner').find('.trophy').fadeIn().animate({     // show winner border and animation for trophy
+            // show winner border and animation for trophy
+            $( data.player().id ).addClass('winner').find('.trophy').fadeIn().animate({
                 right: '95%', height: '+=80%', width: '+=80%'
                 }).delay(4000).animate({
                     left: '65%', height: '-=80%', width: '-=80%'
@@ -107,5 +109,5 @@ $('document').ready( function() {
             $(this).find('.draft-layer').removeClass('draft');                  // remove lighter layer
         };
     });
-    
+    $('#message-box').stop(true,false).fadeIn(1000).delay(4000).fadeOut(2000);
 });
