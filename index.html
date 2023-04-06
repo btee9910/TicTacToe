@@ -13,37 +13,39 @@
     <div class="container">
         <div id="nav">
             <div id="title">Tic•Tac•Toe</div>
-            <p class="rules">The rule is simple: The first player to get 3 of their token in a row win.</p>
+            <p class="rules">Rule: First player to get 3 of their token in a row win.</p>
         </div>
         <div id="board-square-frame">
             <div id="board">
-                <div class="box-background"><div class="content-box" id="button1"><div class="blur-layer"></div></div></div>
-                <div class="box-background"><div class="content-box" id="button2"><div class="blur-layer"></div></div></div>
-                <div class="box-background"><div class="content-box" id="button3"><div class="blur-layer"></div></div></div>
+                <div class="box-base" id="box1"><div class="content-box"><div class="draft-layer"></div></div></div>
+                <div class="box-base" id="box2"><div class="content-box"><div class="draft-layer"></div></div></div>
+                <div class="box-base" id="box3"><div class="content-box"><div class="draft-layer"></div></div></div>
 
-                <div class="box-background"><div class="content-box" id="button4"><div class="blur-layer"></div></div></div>
-                <div class="box-background"><div class="content-box" id="button5"><div class="blur-layer"></div></div></div>
-                <div class="box-background"><div class="content-box" id="button6"><div class="blur-layer"></div></div></div>
+                <div class="box-base" id="box4"><div class="content-box"><div class="draft-layer"></div></div></div>
+                <div class="box-base" id="box5"><div class="content-box"><div class="draft-layer"></div></div></div>
+                <div class="box-base" id="box6"><div class="content-box"><div class="draft-layer"></div></div></div>
 
-                <div class="box-background"><div class="content-box" id="button7"><div class="blur-layer"></div></div></div>
-                <div class="box-background"><div class="content-box" id="button8"><div class="blur-layer"></div></div></div>
-                <div class="box-background"><div class="content-box" id="button9"><div class="blur-layer"></div></div></div>
+                <div class="box-base" id="box7"><div class="content-box"><div class="draft-layer"></div></div></div>
+                <div class="box-base" id="box8"><div class="content-box"><div class="draft-layer"></div></div></div>
+                <div class="box-base" id="box9"><div class="content-box"><div class="draft-layer"></div></div></div>
             </div>
         </div>
-        <div class="player-box" id="player1">
-            <div class="player-box1">
-                <p>Player 1</p>
-                <div><img class="token-img" id="p1-token" src="images/circle.png" alt="circle"></div>
+        <div class="player-box-frame">
+            <div class="player-box player-turn"  id="player1">
+                <div class="trophy"></div>
+                <div class="token-img circle"></div>
+                <input type="text" name="p1" id="p1" placeholder="Enter name here">
             </div>
         </div>
-        <div class="player-box" id="player2">
-            <div class="player-box2">
-                <p>Player 2</p>
-                <div><img class="token-img" id="p2-token" src="images/cross.png" alt="cross"></div>
+        <div class="player-box-frame">
+            <div class="player-box" id="player2">
+                <div class="trophy"></div>
+                <div class="token-img cross"></div>
+                <input type="text" name="p2" id="p2" placeholder="Enter name here">
             </div>
         </div>
         <div id="message-box">
-            Let's play, Player 1 go first!
+            Please enter players name.
         </div>
     </div>
 </body>

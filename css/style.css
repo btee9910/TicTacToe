@@ -1,23 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+
 /* * {
     border: 1px solid red;
 } */
 
 body {
     margin: 0;
-    font-family: sans-serif;
+    font-family: 'Handlee', cursive;
     font-size: 16px;
     line-height: 1.5em;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 700px;
     margin-inline: auto;
     text-align: center;
     display: grid;
     grid-template: 100px 1fr 1fr 100px / repeat( 3, 1fr );
-    gap: 20px;
-    padding: 10px;
+    gap: 15px;
+    padding: 15px;
     box-sizing: border-box;
+}
+
+.container * {
+    width: 100%;
+    margin-inline: auto;
 }
 
 #nav {
@@ -32,7 +39,6 @@ body {
 
 #board-square-frame {
     position: relative;
-    width: 100%;
     grid-row: auto / span 2;
     grid-column: auto / span 2; 
 }
@@ -45,46 +51,61 @@ body {
 
 #board {
     position: absolute;
-    width: 100%;
     height: 100%;
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    gap: 20px;
-    background: #D7D7D7;
+    gap: 2%;
+    background: #d7d7d79c;
     padding: 0px;
     box-sizing: border-box;
-    border: 70px solid rgb(255, 255, 255);
+    border: 3vw solid rgb(255, 255, 255);
     border-radius: 10px;
     box-shadow: 0px 0px 20px grey;
 }
 
-.box-background {
-    background-color: white;
+.box-base, .content-box, .blur-layer{
+    height: inherit;
     box-sizing: border-box;
-    padding: 20px;
 }
 
-.box-background, .content-box, .blur-layer{
-    width: 100%;
-    height: 100%;
+.box-base {
+    background-color: white;
+    position: relative;
+    padding: 20%;
     cursor: pointer;
 }
 
-.player-box {
+.player-box-frame {
+    position: relative;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px grey;
+    box-shadow: 0px 0px 10px rgb(6, 6, 6);
+}
+
+.player-box {
+    height: 100%;
+}
+
+#p1, #p2 {
+    width: 80%;
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 14px;
+    margin: 10%;
+    border-style: hidden;
 }
 
 .token-img {
-    width: 100px;
-    vertical-align: middle;
-    padding-top: 20px;
+    position: relative;
+    width: 30%;
+    height: 30%;
+    margin-top: 30%;
 }
 
 #message-box {
     grid-column: 1 / -1;
     padding-top: 30px;
     font-size: 20px;
+    display: none;
 }
 
 .cross {
@@ -99,8 +120,33 @@ body {
     background-position: center;
 }
 
-.blur {
-    background-color: rgba(255, 255, 255, 0.5);
-    width: 100%;
+.draft {
+    background: rgba(255, 255, 255, 0.8);
     height: 100%;
+}
+
+.player-turn {
+    border: 5px inset #ac6868;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.winner {
+    border: 8px solid #ba3131;
+    position: relative;
+    border-radius: 10px;
+    box-sizing: border-box;
+
+    background: rgba(255, 255, 255, 0);
+}
+
+.trophy {
+    background: url(../images/trophy.gif);
+    background-size: 90%;
+    position: absolute;
+    right: 5%;
+    width: 30%;
+    height: 30%;
+    z-index: 10;
+    display: none;
 }
