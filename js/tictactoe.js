@@ -1,67 +1,11 @@
-// Database
-const data = {
-    player1: {
-        id: '#player1', 
-        name: 'Player 1',
-        token: 'circle',
-        box: []     // empty array to assign each chosen box
-    },
-    player2: { 
-        id: '#player2', 
-        name: 'Player 2',
-        token: 'cross',
-        box: []
-    },
-// [0] is null; [1]-[9] box positions
-    board: [ true, false, false, false, false,
-             false, false, false, false, false ],
-// rows for winning
-    threeInARow: [ [1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7],
-                    [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7] ],
-    winningRow: 1,
-// return current players turn
-    player: function( next = 0 ) {
-        if ( ( this.round + next ) % 2 === 0 ) {
-            return this.player1;
-        } else return this.player2; 
-    },
-// keep track of game round
-    round: 0,
-// When game end
-    theEnd: false,
-// check if someone win
-    alreadyWon: function( ) {
-        let won = false;
-        // iterate each winning row
-        for ( let i = 0; i < data.threeInARow.length; i++ ) {
-            for ( let j = 0; j < 3; j++ ) {     // iterate each box in the row
-                // check box match player's box
-                if ( $.inArray( data.threeInARow[ i ][ j ], data.player().box ) === -1 ) {
-                    won = false;                                                            
-                    break;      // exit iteration if not match
-                } else won = true;
-            }; if ( won ) {
-                data.winningRow += i;                       // identify winning row
-                return data.theEnd = true;                  // if a row is matching 
-            };
-        }; return won;                                      // otherwise it return false
-    }
-};
-
 
 $('document').ready( function() {
-
-    // Take players name
-    $('#p1, #p2').on('keyup', function () {
-        const currentPlayer = 'player' + $(this).attr('id').slice( -1 ) ;  
-        data[ currentPlayer ].name = $(this).val();      // Store player name to data
-    });
 
     // Game input
     $('#box1, #box2, #box3, #box4, #box5, #box6, #box7, #box8, #box9').on('click', function() {
 
         const boxNum = Number( $(this).attr('id').slice( -1 ) );            // get clicked box number
-        if ( data.theEnd || data.board[ boxNum ] ) return;                  // return if game end or box taken
+        if ( data.endGrame || data.board[ boxNum ] ) return;                  // return if game end or box taken
 
         $( data.player().id ).removeClass('player-turn');                   // remove 'whose turn' border from player
         $(this).children('.content-box').addClass( data.player().token );   // assign token image in box
@@ -70,7 +14,7 @@ $('document').ready( function() {
         data.board[ boxNum ] = true;                                        // record chosen box on board in data
 
         if ( data.alreadyWon() ) {                                          // check if someone win
-            $(`.line`).addClass(`line${ data.winningRow }`).slideDown();
+            $(`.line`).addClass(`line${ data.winningRow }`).fadeIn();
             $('#message-box').text(`Winner is ${ data.player().name }!`).stop(true,false).animate( { fontSize: '3em' } ).animate( { fontSize: '2em' } ).animate( { fontSize: '3em' }, 1000 );   // message animation
             // show winner border and animation for trophy
             $( data.player().id ).addClass('winner').find('.trophy').fadeIn().animate({
@@ -93,7 +37,7 @@ $('document').ready( function() {
     $('#box1, #box2, #box3, #box4, #box5, #box6, #box7, #box8, #box9').mouseenter( function() { 
         const boxNum = Number( $(this).attr('id').slice( -1 ) );                // get clicked box number
 
-        if ( data.board[ boxNum ] || data.theEnd ) {                             // return if box is taken or game end
+        if ( data.board[ boxNum ] || data.endGrame ) {                             // return if box is taken or game end
             return;
         } else {
             $(this).find('.content-box').addClass( data.player().token );       // add token
@@ -109,5 +53,95 @@ $('document').ready( function() {
             $(this).find('.draft-layer').removeClass('draft');                  // remove lighter layer
         };
     });
-    $('#message-box').stop(true,false).fadeIn(1000).delay(4000).fadeOut(2000);
+
+    // Below are addition functions for pre-game interation. Below codes are not complete and not 'dry' as it have been done in a rush just for the purpose of adding customisatiom of the game.
+    // Game setup
+    $('.page1').on('click', function() {
+        $('button').fadeOut(1);
+
+        if ( $(this).attr('id') === '1p' ) {
+            data.currentpage = 'page2p1';
+            data.is2p = false;
+            $('.page2p1').fadeIn(500);
+            $('.intro-img').addClass('token-selection');
+            $('.intro-block > h2').stop(true, false).fadeOut(1).text('Select your token?').fadeIn(1500);
+            $('.incomplete').slideDown(500);
+        } else {
+            data.currentpage = 'page2p2';
+            data.is2p = true;
+            $('.page2p2').fadeIn(500);
+            $('.intro-block > h2').stop(true, false).fadeOut(1).text('Personalise your game?').fadeIn(1500);
+        }
+    });
+
+    // page 2 of intro, 
+    $('button.page2p2, .page2p1').on('click', function() {
+
+        if ( $( this ).attr('id') === 'skip' ) {
+            data.p1.name = 'Player 1';
+            data.p2.name = 'Player 2';
+        } else if ( $( this ).attr('id') === 'back' ) {
+            // call back
+            return;
+        };
+        
+        data.currentpage = 'page3';
+        $('.page2p2').hide(1);
+        $('.page3').fadeIn(500);
+        $('.p1-name').text(`${ data.p1.name }`);
+        $('.p2-name').text(`${ data.p2.name }`);
+        $('.intro-img').addClass('token-selection');
+        $('.intro-block > h2').stop(true, false).fadeOut(1).text('Who goes first?').fadeIn(1500);
+    });
+
+    // Page 3 of intro, page before game
+    $('button.page3, img.page3').on('click', function() {
+
+        if ( data.currentpage !== 'page3' ) {
+            return;
+        } else if ( $( this ).attr('id') === 'back' ) {
+            // call back
+            return;
+        } else if ( $( this ).attr('id') === 'random' ) {
+            const randNum = Math.floor( Math.random() *2 );
+            data.firstPlayer = `p${ randNum + 1  }`;
+            data.secondPlayer = `p${ ( 2 - randNum ) }`;
+        } else if ( $( this ).attr('alt') === 'circle') {
+            data.firstPlayer = 'p1';
+            data.secondPlayer = 'p2';
+        } else if ( $( this ).attr('alt') === 'cross') {
+            data.firstPlayer = 'p2';
+            data.secondPlayer = 'p1';
+        };
+        data.currentpage = 'game';
+        $('#intro').slideUp(300);
+        $('.game').delay(500).fadeIn(500);
+        $( data.player().id ).addClass('player-turn'); 
+    });
+
+    // Back button function: go back to previous option 'page'
+    $('#back').on('click', function() {
+        if ( data.currentpage === "page2p1" || data.currentpage === "page2p2" ) {
+            $('button, .incomplete').hide(1);
+            $('.page1').fadeIn(500);
+            $('.intro-block > h2').stop(true, false).fadeOut(1).text('Ready to play?').fadeIn(1500);
+            data.currentpage = "page1";
+            return;
+        } else if ( data.currentpage === "page3" &&  data.is2p ) {
+            $('button, .p-name>.page3').hide(1);
+            $('.page2p2').fadeIn(500);
+            $('.intro-img').removeClass('token-selection');
+            data.currentpage = "page2p2";
+        } else if ( data.currentpage === "page3" && !(data.is2p) ) {
+            $('button').hide(1);
+            $('.page2p1').fa;deIn(500);
+            data.currentpage = "page2p1";
+        };
+        $('.intro-block > h2').stop(true, false).fadeOut(1).text('Personalise your game?').fadeIn(1500);
+    });
+
+    // Take personalise players name
+    $('#insert-p1, #insert-p2').on('keyup', function () {
+        data[ $(this).attr('id').slice( -2 ) ].name = $(this).val();      // Store player name to data
+    });
 });

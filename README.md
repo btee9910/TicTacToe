@@ -1,26 +1,35 @@
 # Project 0: TIC TAC TOE
 
-> Warning: Not complete yet!
+> Completed simple game for 2 players.
 ---
-## Work in progress
-* *HTML* - still on draft
-* *JS* 
-    * Take basic inport - done
-    * identify winner - done
-![testing result](images/testing-result.png)
-    * alternating player turn - done
-    * interaction on html - done
-    * identify fault and fix it - in progress
-    * improve player interface - in progress
-    * Add features - soon
-    * filter code to make it dry - soon
+
+## **Game rule**
+First player to get 3 of their token in a row win.
+
+## **How to start?**
+1. Visit the game page [Tic Tac Toe](https://btee9910.github.io/project0/).
+1. Choose Single player(*not avaialble yet*) or 2 players.
+1. Insert players' name and click <mark>Next</mark> or use default names, 'Player 1' & 'Player 2', by clicking the <mark>Skip</mark> button.
+1. Choose which player goes first by clicking on the token.
+
+## **During the game**
+* Brown color border line around the player's token box indicate the turn of the player.
+* Draft token will be shown on the game board while mouse cursor is hovering on each box.
+* Simple move over to an empty box and click on it if you would like to place your token on that box.
+* First player to get 3 of their token in a row win, otherwsie it will be a draw game.
+* When a player win, a trophy will be placed on the top right corner of the winning token.
+
+Refresh broswer to start a new game.
 
 ---
-## Visit the game page [Tic Tac Toe](https://btee9910.github.io/project0/).
+## Stack includes:
+* HTML
+* CSS
+* JavaScript
+* JQuery
 
-<br></br>
 
-### See below for drafted layout
+### Below is the first draft design layout for this project.
 ---
 
 ![Layout](images/updated-layout.png)
