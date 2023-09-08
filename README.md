@@ -7,7 +7,7 @@
 First player to get 3 of their token in a row win.
 
 ## **How to start?**
-1. Visit the game page [Tic Tac Toe](https://btee9910.github.io/project0/).
+1. Visit the game page [Tic Tac Toe](https://btee9910.github.io/tictacttoe/).
 1. Choose Single player(*not avaialble yet*) or 2 players.
 1. Insert players' name and click <mark>Next</mark> or use default names, 'Player 1' & 'Player 2', by clicking the <mark>Skip</mark> button.
 1. Choose which player goes first by clicking on the token.
